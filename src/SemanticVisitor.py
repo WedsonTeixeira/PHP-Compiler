@@ -167,6 +167,7 @@ class SemanticVisitor(AbstractVisitor):
     
   def visitExpr_Expr1(self, expr):
     return expr.expr1.accept(self)
+   
   
   def visitExpr_Expr3(self, expr):
     return expr.expr3.accept(self)
@@ -174,9 +175,13 @@ class SemanticVisitor(AbstractVisitor):
   def visitExpr_Expr1_Expr2(self, expr):
     type1 = expr.expr1.accept(self)
     type2 = expr.expr2.accept(self)
+    if(type2 == None):
+      return ['None', type1]
+    else:
+      return [type1,type2]
+
     if type(type1) is dict:
       type1 = type1[st.TYPE]
-      
     c = coercion(type1, type2[1])
     if (c == None):
       print('ERROR: Expression ', end='')
@@ -186,12 +191,19 @@ class SemanticVisitor(AbstractVisitor):
       print(' has type', type2[1])
     return c
   
+  def visitExpr2_ComparissionOp(self, expr2):
+    compOp = expr2.comparissionOp.accept(self)
+    expr   = expr2.expr.accept(self)
+    print(compOp,expr)
+    return [compOp,expr]
+  
+  def visitComparissionOperator_Token(self, comparissonOp):
+    return comparissonOp.token
+
   def visitExpr2_ArithmeticOp(self, expr2):
     exprType = expr2.expr.accept(self)
-    
     if type(exprType) is dict:
       exprType = exprType[st.TYPE]
-    
     return [st.ARITH, exprType]
   
   def visitExpr3_Var_Assign_Expr(self, expr3):   
@@ -224,7 +236,7 @@ class SemanticVisitor(AbstractVisitor):
     variable = expr1.variable.accept(self)
     if variable[st.TYPE] not in st.Number:
       print('ERROR: Cannot increment variable', variable[st.NAME], 'with type', variable[st.TYPE])
-      
+    
   def visitExpr1_Variable_Decrement(self, expr1):
     variable = expr1.variable.accept(self)
     if variable[st.TYPE] not in st.Number:

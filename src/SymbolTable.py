@@ -1,26 +1,38 @@
 symbolTable = []
-INT = 'int'
-FLOAT = 'float'
-BOOL = 'boolean'
-STRING = 'string'
-ARRAY = 'array'
+INT     = 'int'
+FLOAT   = 'float'
+BOOL    = 'boolean'
+TRUE    = 'true'
+FALSE   = 'false'
+STRING  = 'string'
+ARRAY   = 'array'
 
-SCOPE = 'scope'
+SCOPE    = 'scope'
 BINDABLE = 'bindable'
 FUNCTION = 'function'
-PARAMS = 'params'
+PARAMS   = 'params'
 
 VARIABLE = 'var'
-TYPE = 'type'
-NAME = 'name' 
+TYPE     = 'type'
+NAME     = 'name' 
 
-COMP = 'compOp'
+COMP  = 'compOp'
 ARITH = 'arithOp'
 
-COMP = 'compOp'
-ARITH = 'arithOp'
+#Operadores de comparação
+BEQ         = '=='
+BNQ         = '!='
+GREAT_THAN  = '>'
+LESSTHAN    = '<'
+GREAT_EQUAL = '>='
+LESS_EQUAl  = '<='
+AND         = '&&'
+OR          = '||'
 
-Number = [INT, FLOAT]
+OpLogic = [AND,OR]
+OpComp  = [BEQ,BNQ,GREAT_THAN,LESSTHAN,GREAT_EQUAL,LESS_EQUAl]
+Boolean = [TRUE,FALSE]
+Number  = [INT, FLOAT]
 
 def beginScope(nameScope):
   global symbolTable
